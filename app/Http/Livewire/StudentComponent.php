@@ -24,4 +24,10 @@ class StudentComponent extends Component
             'students' => Student::orderBy('id', 'asc')->paginate(5)
         ]);
     }
+
+    //metodo eliminar
+    public function destroy($id){
+
+        Student::destroy($id);
+    }
 }
