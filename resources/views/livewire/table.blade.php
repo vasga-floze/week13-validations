@@ -22,9 +22,9 @@
             <td>{{ $student->telephone }}</td>
             <td>{{ $student->email }}</td>
             <td>
-                <button class="btn btn-primary">
+            <button wire:click="edit({{ $student->id }})" class="btn btn-primary">
                     Editar
-                </button>
+            </button>
             </td>
             <td>
                 <!--Agregar atributo propio del componente: wire y luego el evento: click 
