@@ -35,8 +35,14 @@ class StudentComponent extends Component
        public function store(){
 
         //validar que los campos tengan contenido
-        $this->validate(['code'=> 'required', 'name' => 'required'
-        , 'address' => 'required', 'telephone' => 'required', 'email' => 'required']);
+
+        $this->validate([
+            'code'=> 'required', 
+            'name' => 'required', 
+            'address' => 'required', 
+            'telephone' => 'required|digits:8', 
+            'email' => 'required|email|max:255'
+        ]);
 
         //si la validacion anterior es true, se ejecuta el método create
         $student = Student::create([
