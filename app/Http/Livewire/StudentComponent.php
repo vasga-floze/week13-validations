@@ -37,21 +37,21 @@ class StudentComponent extends Component
         //validar que los campos tengan contenido
 
         $this->validate([
-            'code'=> 'required', 
-            'name' => 'required', 
-            'address' => 'required', 
+            'code'      => 'required', 
+            'name'      => 'required', 
+            'address'   => 'required', 
             'telephone' => 'required|digits:8', 
-            'email' => 'required|email|max:255'
+            'email'     => 'required|email|max:255'
         ]);
 
         //si la validacion anterior es true, se ejecuta el método create
         $student = Student::create([
 
-            'code' => $this->code,
-            'name' => $this->name, 
-            'address' => $this->address, 
+            'code'      => $this->code,
+            'name'      => $this->name, 
+            'address'   => $this->address, 
             'telephone' => $this->telephone, 
-            'email' => $this->email, 
+            'email'     => $this->email, 
         ]);
 
         //que se ejecute el metodo edit para que de una vez se guarde permita hacer una actualizacion
@@ -67,25 +67,53 @@ class StudentComponent extends Component
 
         $student = Student::find($id);
         $this->student_id = $student->id;
-        $this->code = $student->code;
-        $this->name = $student->name;
-        $this->address = $student->address;
-        $this->telephone = $student->telephone;
-        $this->email = $student->email;
+        $this->code       = $student->code;
+        $this->name       = $student->name;
+        $this->address    = $student->address;
+        $this->telephone  = $student->telephone;
+        $this->email      = $student->email;
 
  
         //cambiar en la propiedad, la vista que se va a mostrar 
         $this->view = 'edit';
-     }
+    }
 
-     //Método que va a mostrar el estado inicial de la vista y va a limpiar los campos
+    //Método actualizar
+    public function update(){
+
+        //validar que los campos tengan contenido
+        $this->validate([
+            'code'      => 'required', 
+            'name'      => 'required', 
+            'address'   => 'required', 
+            'telephone' => 'required', 
+            'email'     => 'required'
+        ]);
+
+        //contiene el id y lo almacena en la variable
+        $student = Student::find($this->student_id);
+
+        $student->update([
+            'code'      => $this->code,
+            'name'      => $this->name,
+            'address'   => $this->address,
+            'telephone' => $this->telephone,
+            'email'     => $this->email,
+        ]);
+
+        //una vez actualizado el formulario vuelve a la normalidad, con el metodo creado como default
+        $this->default();
+    }
+
+
+    //Método que va a mostrar el estado inicial de la vista y va a limpiar los campos
     public function default(){
-        $this->student_id = "";
-        $this->code = "";
-        $this->name = "";
-        $this->address = "";
-        $this->telephone = "";
-        $this->email = "";
+        $this->student_id = '';
+        $this->code       = '';
+        $this->name       = '';
+        $this->address    = '';
+        $this->telephone  = '';
+        $this->email      = '';
 
         $this->view = 'create';
     }
