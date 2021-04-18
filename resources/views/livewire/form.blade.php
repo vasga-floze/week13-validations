@@ -4,7 +4,7 @@
 <!--Para conectar el input con el componente, se debe agregar el atributo propio del componente: wire 
  y luego se indica: model porque este me permite conecctar a una propiedad de la clase(del componente)
  en este caso la propiedad se llama code-->
-    <textarea class="form-control" wire:model="code"></textarea>
+    <input class="form-control" wire:model="code">
     @error('code') <span> {{ $message }} </span>@enderror
 </div>
 
@@ -22,12 +22,12 @@
 
 <div class="form-group">
     <label>Telefono</label>
-    <textarea class="form-control" wire:model="telephone"></textarea>
+    <input class="form-control" wire:model="telephone">
     @error('telephone') <span> {{ $message }} </span>@enderror
 </div>
 
 <div class="form-group">
     <label>Correo</label>
-    <textarea class="form-control" wire:model="email"></textarea>
+    <input class="form-control" wire:model="email">
     @error('email') <span> {{ $message }} </span>@enderror
 </div>
