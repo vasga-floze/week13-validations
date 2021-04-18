@@ -44,9 +44,6 @@
                 @endif
             </div>
         </div>
-    </div>
-
-    <div class="container-fluid fixed-top p-4">
         @yield('content')
     </div>
 
