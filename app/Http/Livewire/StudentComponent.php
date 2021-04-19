@@ -18,10 +18,124 @@ class StudentComponent extends Component
     toma los estilos de paginacion de Tailwind */ 
     protected $paginationTheme = 'bootstrap';
 
+    //propiedades que serviran para conectar desde los wire
+    public $student_id, $code, $name, $address, $telephone, $email;
+
+
+    public $isOpen = 0;
+
+    public function openModal(){
+        $this->isOpen = true;
+    }
+    public function closeModal(){
+        $this->isOpen = false;
+    }
+
+    public function create(){
+        $this->openModal();
+    }
+
+    
+    //variable que indica la vista que se va a pasar al componente 
+    public $view = 'create';
+
     public function render()
     {
         return view('livewire.student-component',[
-            'students' => Student::orderBy('id', 'asc')->paginate(5)
+            'students' => Student::orderBy('id', 'desc')->paginate(5)
         ]);
+    }
+
+       //metodo store accede a la DB
+       public function store(){
+
+        //validar que los campos tengan contenido
+
+        $this->validate([
+            'code'      => 'required', 
+            'name'      => 'required', 
+            'address'   => 'required', 
+            'telephone' => 'required|digits:8', 
+            'email'     => 'required|email|max:255'
+        ]);
+
+        //si la validacion anterior es true, se ejecuta el método create
+        $student = Student::create([
+
+            'code'      => $this->code,
+            'name'      => $this->name, 
+            'address'   => $this->address, 
+            'telephone' => $this->telephone, 
+            'email'     => $this->email, 
+        ]);
+
+        //que se ejecute el metodo edit para que de una vez se guarde permita hacer una actualizacion
+        $this->edit($student->id);
+        //al ingresar un nuevo registro, los input se limpian
+        $this->reset(['code', 'name', 'address', 'telephone', 'email']);
+
+    }
+
+    
+    //Método editar (pasar al formulario los datos)
+    public function edit($id){
+
+        $student = Student::find($id);
+        $this->student_id = $student->id;
+        $this->code       = $student->code;
+        $this->name       = $student->name;
+        $this->address    = $student->address;
+        $this->telephone  = $student->telephone;
+        $this->email      = $student->email;
+
+ 
+        //cambiar en la propiedad, la vista que se va a mostrar 
+        $this->view = 'edit';
+    }
+
+    //Método actualizar
+    public function update(){
+
+        //validar que los campos tengan contenido
+        $this->validate([
+            'code'      => 'required', 
+            'name'      => 'required', 
+            'address'   => 'required', 
+            'telephone' => 'required|digits:8', 
+            'email'     => 'required|email|max:255'
+        ]);
+
+        //contiene el id y lo almacena en la variable
+        $student = Student::find($this->student_id);
+
+        $student->update([
+            'code'      => $this->code,
+            'name'      => $this->name,
+            'address'   => $this->address,
+            'telephone' => $this->telephone,
+            'email'     => $this->email,
+        ]);
+
+        //una vez actualizado el formulario vuelve a la normalidad, con el metodo creado como default
+        $this->default();
+    }
+
+
+    //Método que va a mostrar el estado inicial de la vista y va a limpiar los campos
+    public function default(){
+        $this->student_id = '';
+        $this->code       = '';
+        $this->name       = '';
+        $this->address    = '';
+        $this->telephone  = '';
+        $this->email      = '';
+
+        $this->view = 'create';
+    }
+
+    //metodo eliminar
+    public function destroy($id){
+
+        Student::destroy($id);
     }
 }

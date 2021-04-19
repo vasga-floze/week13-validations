@@ -1,4 +1,8 @@
-<h2>Listado de Estudiantes</h2>
+<x-slot name="header">
+        <h2 class="h4 font-weight-bold">
+            {{ __('Listado Estudiantes') }}
+        </h2>
+    </x-slot>
 
 <table class="table">
     <thead>
@@ -22,12 +26,14 @@
             <td>{{ $student->telephone }}</td>
             <td>{{ $student->email }}</td>
             <td>
-                <button class="btn btn-primary">
+            <button wire:click="edit({{ $student->id }})" class="btn btn-primary">
                     Editar
-                </button>
+            </button>
             </td>
             <td>
-                <button class="btn btn-danger">
+                <!--Agregar atributo propio del componente: wire y luego el evento: click 
+                luego se llama al método destroy y dentro que reciba el id, porque ya tenemos la variable student-->
+                <button wire:click="destroy({{ $student->id }})" class="btn btn-danger">
                     Eliminar
                 </button>
             </td>
