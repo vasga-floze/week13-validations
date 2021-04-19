@@ -21,13 +21,28 @@ class StudentComponent extends Component
     //propiedades que serviran para conectar desde los wire
     public $student_id, $code, $name, $address, $telephone, $email;
 
+
+    public $isOpen = 0;
+
+    public function openModal(){
+        $this->isOpen = true;
+    }
+    public function closeModal(){
+        $this->isOpen = false;
+    }
+
+    public function create(){
+        $this->openModal();
+    }
+
+    
     //variable que indica la vista que se va a pasar al componente 
     public $view = 'create';
 
     public function render()
     {
         return view('livewire.student-component',[
-            'students' => Student::orderBy('id', 'asc')->paginate(5)
+            'students' => Student::orderBy('id', 'desc')->paginate(5)
         ]);
     }
 
