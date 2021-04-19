@@ -86,8 +86,8 @@ class StudentComponent extends Component
             'code'      => 'required', 
             'name'      => 'required', 
             'address'   => 'required', 
-            'telephone' => 'required', 
-            'email'     => 'required'
+            'telephone' => 'required|digits:8', 
+            'email'     => 'required|email|max:255'
         ]);
 
         //contiene el id y lo almacena en la variable
