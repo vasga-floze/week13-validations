@@ -1,4 +1,8 @@
-<h2>Listado de Estudiantes</h2>
+<x-slot name="header">
+        <h2 class="h4 font-weight-bold">
+            {{ __('Listado Estudiantes') }}
+        </h2>
+    </x-slot>
 
 <table class="table">
     <thead>
